@@ -1,26 +1,45 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
+    android:orientation="horizontal"
     android:padding="16dp"
     android:background="@android:color/white"
     android:layout_margin="8dp"
     android:elevation="4dp">
 
-    <!-- Tytuł notatki -->
-    <TextView
-        android:id="@+id/text_view_title"
-        android:layout_width="wrap_content"
+    <!-- Sekcja tekstowa -->
+    <LinearLayout
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:text="Tytuł"
-        android:textSize="18sp"
-        android:textStyle="bold" />
+        android:layout_weight="1"
+        android:orientation="vertical">
 
-    <!-- Treść notatki -->
-    <TextView
-        android:id="@+id/text_view_content"
+        <!-- Tytuł notatki -->
+        <TextView
+            android:id="@+id/text_view_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Tytuł"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <!-- Treść notatki -->
+        <TextView
+            android:id="@+id/text_view_content"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Treść notatki"
+            android:textSize="14sp" />
+    </LinearLayout>
+
+    <!-- Ikona kosza -->
+    <ImageView
+        android:id="@+id/image_view_delete"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Treść notatki"
-        android:textSize="14sp" />
+        android:src="@android:drawable/ic_menu_delete"
+        android:contentDescription="Usuń notatkę"
+        android:layout_gravity="center_vertical"
+        android:padding="8dp"
+        android:layout_marginStart="8dp" />
 </LinearLayout>

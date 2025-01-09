@@ -2,6 +2,7 @@ package pl.kamil.notesproject.view;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Toast;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -46,6 +47,12 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button_add_note).setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, AddEditNoteActivity.class);
             startActivity(intent);
+        });
+
+        // Obsługa kliknięcia ikony kosza
+        noteAdapter.setOnDeleteClickListener(note -> {
+            noteViewModel.delete(note); // Wywołujemy usuwanie w ViewModel
+            Toast.makeText(MainActivity.this, "Notatka usunięta", Toast.LENGTH_SHORT).show();
         });
     }
 }

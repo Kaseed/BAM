@@ -62,6 +62,12 @@ public class NoteFileDataBase {
         saveNotes(notes);
     }
 
+    public void delete(Note note) {
+        List<Note> notes = new ArrayList<>(notesLiveData.getValue());
+        notes.remove(note);
+        saveNotes(notes);
+    }
+
     private void loadNotes() {
         try {
             if (!file.exists()) {

@@ -25,4 +25,8 @@ public class NoteRepository {
     public LiveData<List<Note>> getAllNotes() {
         return allNotes;
     }
+
+    public void delete(Note note) {
+        database.delete(note);
+    }
 }
