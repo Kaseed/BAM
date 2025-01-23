@@ -20,11 +20,14 @@ import java.io.FileOutputStream;
 import java.security.KeyStore;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
+
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.GCMParameterSpec;
 
+import pl.kamil.native_lib.NativeLib;
 import pl.kamil.notesproject.model.Note;
 
 public class NoteFileDataBase {

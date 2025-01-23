@@ -6,9 +6,11 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import pl.kamil.native_lib.NativeLib;
 import pl.kamil.notesproject.R;
 
 public class ViewNoteActivity extends AppCompatActivity {
+    private final NativeLib nativeLib = new NativeLib();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,8 +25,10 @@ public class ViewNoteActivity extends AppCompatActivity {
         String noteTitle = getIntent().getStringExtra("note_title");
         String noteContent = getIntent().getStringExtra("note_content");
 
+
+
         // Ustaw dane w widokach
         textViewTitle.setText(noteTitle);
-        textViewContent.setText(noteContent);
+        textViewContent.setText(nativeLib.encryptWithXOR(noteContent, 2));
     }
 }

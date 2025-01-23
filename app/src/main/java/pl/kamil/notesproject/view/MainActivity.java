@@ -23,6 +23,7 @@ import java.io.FileOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import pl.kamil.native_lib.NativeLib;
 import pl.kamil.notesproject.R;
 import pl.kamil.notesproject.adapter.NoteAdapter;
 import pl.kamil.notesproject.model.Note;
