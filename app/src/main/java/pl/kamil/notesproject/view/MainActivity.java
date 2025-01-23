@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -25,6 +26,7 @@ import java.util.List;
 import pl.kamil.notesproject.R;
 import pl.kamil.notesproject.adapter.NoteAdapter;
 import pl.kamil.notesproject.model.Note;
+import pl.kamil.notesproject.util.AuthenticationHelper;
 import pl.kamil.notesproject.util.NoteUtil;
 import pl.kamil.notesproject.viewmodel.NoteViewModel;
 
@@ -38,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         setContentView(R.layout.activity_main);
 
         recyclerView = findViewById(R.id.recycler_view);
@@ -59,15 +62,19 @@ public class MainActivity extends AppCompatActivity {
         });
 
         noteAdapter.setOnItemClickListener(note -> {
-            Intent intent = new Intent(MainActivity.this, ViewNoteActivity.class);
-            intent.putExtra("note_title", note.getTitle());
-            intent.putExtra("note_content", note.getContent());
-            startActivity(intent);
+            authenticateAndProceed(() -> {
+                Intent intent = new Intent(MainActivity.this, ViewNoteActivity.class);
+                intent.putExtra("note_title", note.getTitle());
+                intent.putExtra("note_content", note.getContent());
+                startActivity(intent);
+            });
         });
 
         findViewById(R.id.button_add_note).setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, AddEditNoteActivity.class);
-            startActivity(intent);
+            authenticateAndProceed(() -> {
+                Intent intent = new Intent(MainActivity.this, AddEditNoteActivity.class);
+                startActivity(intent);
+            });
         });
 
         findViewById(R.id.button_export_notes).setOnClickListener(v -> showExportDialog());
@@ -82,6 +89,21 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(this, "Błąd podczas czyszczenia bazy danych: " + e.getMessage(), Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void authenticateAndProceed(Runnable onSuccess) {
+        AuthenticationHelper authHelper = new AuthenticationHelper(this, new AuthenticationHelper.AuthenticationCallback() {
+            @Override
+            public void onAuthenticationSuccess() {
+                onSuccess.run();
+            }
+
+            @Override
+            public void onAuthenticationFailure(String error) {
+                Toast.makeText(MainActivity.this, "Uwierzytelnienie nie powiodło się: " + error, Toast.LENGTH_SHORT).show();
+            }
+        });
+        authHelper.authenticate();
     }
 
     private void showExportDialog() {

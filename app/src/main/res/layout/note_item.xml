@@ -28,6 +28,9 @@
             android:id="@+id/text_view_content"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:maxLines="1"
+            android:maxLength="35"
+            android:ellipsize="end"
             android:text="Treść notatki"
             android:textSize="14sp" />
     </LinearLayout>
