@@ -29,6 +29,7 @@ import pl.kamil.notesproject.adapter.NoteAdapter;
 import pl.kamil.notesproject.model.Note;
 import pl.kamil.notesproject.util.AuthenticationHelper;
 import pl.kamil.notesproject.util.NoteUtil;
+import pl.kamil.notesproject.util.RootUtil;
 import pl.kamil.notesproject.viewmodel.NoteViewModel;
 
 
@@ -43,6 +44,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_SECURE, WindowManager.LayoutParams.FLAG_SECURE);
         setContentView(R.layout.activity_main);
+
+        if (RootUtil.isDeviceRooted()) {
+            Toast.makeText(this, "Twoje urządzenie nie jest bezpieczne", Toast.LENGTH_LONG).show();
+        }
 
         recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
