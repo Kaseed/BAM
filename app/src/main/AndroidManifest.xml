@@ -29,6 +29,10 @@
             android:name=".view.AddEditNoteActivity"
             android:exported="false"
             android:theme="@style/Theme.NotesProject" />
+        <activity
+            android:name=".view.ViewNoteActivity"
+            android:exported="false"
+            android:theme="@style/Theme.NotesProject" />
     </application>
 
 </manifest>

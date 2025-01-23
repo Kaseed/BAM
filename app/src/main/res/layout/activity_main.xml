@@ -2,19 +2,21 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:padding="8dp" />
 
+    <!-- Pierwszy rząd przycisków: Dodaj, Eksportuj, Importuj -->
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:orientation="horizontal"
-        android:layout_margin="16dp">
+        android:layout_marginBottom="80dp"> <!-- Odstęp od dolnego brzegu -->
 
         <Button
             android:id="@+id/button_add_note"
@@ -36,4 +38,21 @@
             android:layout_marginStart="8dp"
             android:text="Importuj" />
     </LinearLayout>
+
+    <!-- Drugi rząd przycisków: Wyczyść bazę danych -->
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp"> <!-- Odstęp od dolnego brzegu -->
+
+        <Button
+            android:id="@+id/button_clear_data"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Wyczyść" />
+    </LinearLayout>
+
 </RelativeLayout>

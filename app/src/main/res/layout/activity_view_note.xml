@@ -1,0 +1,24 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp">
+
+    <!-- Wyświetlanie tytułu -->
+    <TextView
+        android:id="@+id/text_view_note_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:paddingBottom="8dp"
+        android:text="Tytuł Notatki" />
+
+    <!-- Wyświetlanie treści -->
+    <TextView
+        android:id="@+id/text_view_note_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textSize="16sp"
+        android:text="Treść notatki" />
+</LinearLayout>

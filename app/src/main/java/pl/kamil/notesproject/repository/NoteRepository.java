@@ -29,4 +29,8 @@ public class NoteRepository {
     public void delete(Note note) {
         database.delete(note);
     }
+
+    public void dropDatabase() {
+        database.dropDatabase();
+    }
 }

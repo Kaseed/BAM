@@ -3,6 +3,9 @@ package pl.kamil.notesproject.database;
 import android.content.Context;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
+import android.util.Log;
+import android.widget.Toast;
+
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 import com.google.gson.Gson;
@@ -66,6 +69,36 @@ public class NoteFileDataBase {
         List<Note> notes = new ArrayList<>(notesLiveData.getValue());
         notes.remove(note);
         saveNotes(notes);
+    }
+
+    public void dropDatabase() {
+        try {
+            // Usuń klucz z Android Keystore
+            KeyStore keyStore = KeyStore.getInstance("AndroidKeyStore");
+            keyStore.load(null);
+
+            if (keyStore.containsAlias(KEY_ALIAS)) {
+                keyStore.deleteEntry(KEY_ALIAS);
+            }
+
+            // Usuń plik z notatkami
+            if (file.exists()) {
+                if (file.delete()) {
+                    Log.i("NoteDatabase", "Dane i klucz zostały usunięte.");
+                } else {
+                    Log.e("NoteDatabase", "Nie udało się usunąć danych.");
+                }
+            } else {
+                Log.e("NoteDatabase", "Plik danych nie istnieje.");
+            }
+
+            // Wyczyść listę notatek w pamięci
+            notesLiveData.postValue(new ArrayList<>());
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw new RuntimeException("Błąd podczas usuwania bazy danych: " + e.getMessage());
+        }
     }
 
     private void loadNotes() {

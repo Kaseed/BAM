@@ -58,6 +58,13 @@ public class MainActivity extends AppCompatActivity {
             Toast.makeText(MainActivity.this, "Notatka usunięta", Toast.LENGTH_SHORT).show();
         });
 
+        noteAdapter.setOnItemClickListener(note -> {
+            Intent intent = new Intent(MainActivity.this, ViewNoteActivity.class);
+            intent.putExtra("note_title", note.getTitle());
+            intent.putExtra("note_content", note.getContent());
+            startActivity(intent);
+        });
+
         findViewById(R.id.button_add_note).setOnClickListener(v -> {
             Intent intent = new Intent(MainActivity.this, AddEditNoteActivity.class);
             startActivity(intent);
@@ -66,6 +73,15 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.button_export_notes).setOnClickListener(v -> showExportDialog());
 
         findViewById(R.id.button_import_notes).setOnClickListener(v -> showImportDialog());
+
+        findViewById(R.id.button_clear_data).setOnClickListener(v -> {
+            try {
+                noteViewModel.clearDataAndKey();
+                Toast.makeText(this, "Baza danych została wyczyszczona", Toast.LENGTH_LONG).show();
+            } catch (Exception e) {
+                Toast.makeText(this, "Błąd podczas czyszczenia bazy danych: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     private void showExportDialog() {
