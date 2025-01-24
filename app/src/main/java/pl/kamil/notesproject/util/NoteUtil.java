@@ -22,7 +22,7 @@ public class NoteUtil {
         for (Note note : notes) {
             jsonBuilder.append("{")
                     .append("\"title\":\"").append(note.getTitle()).append("\",")
-                    .append("\"content\":\"").append(note.getContent()).append("\"},");
+                    .append("\"content\":\"").append(note.getContent().replace("\"", "\\\"")).append("\"},");
         }
         jsonBuilder.setLength(jsonBuilder.length() - 1);
         jsonBuilder.append("]");

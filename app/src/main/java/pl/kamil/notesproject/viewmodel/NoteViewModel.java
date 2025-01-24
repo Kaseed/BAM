@@ -31,6 +31,10 @@ public class NoteViewModel extends AndroidViewModel {
         repository.insert(encryptedNote);
     }
 
+    public void insertWithOutEncryption(Note note) {
+        repository.insert(note);
+    }
+
     public LiveData<List<Note>> getAllNotes() {
         return allNotes;
     }

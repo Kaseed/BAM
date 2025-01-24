@@ -170,7 +170,7 @@ public class MainActivity extends AppCompatActivity {
 
     private void importNotes(String filePath, String password) {
         try {
-            File file = new File(filePath);
+            File file = new File(getExternalFilesDir(null), filePath);
             if (!file.exists()) {
                 Toast.makeText(this, "Plik nie istnieje!", Toast.LENGTH_SHORT).show();
                 return;
@@ -187,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
             List<Note> importedNotes = NoteUtil.convertJsonToNotes(decryptedJson);
 
             for (Note note : importedNotes) {
-                noteViewModel.insert(note);
+                noteViewModel.insertWithOutEncryption(note);
             }
 
             Toast.makeText(this, "Notatki zaimportowano pomyślnie!", Toast.LENGTH_LONG).show();
