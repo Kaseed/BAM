@@ -57,7 +57,6 @@ public class AuthenticationHelper {
 
         switch (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK | BiometricManager.Authenticators.DEVICE_CREDENTIAL)) {
             case BiometricManager.BIOMETRIC_SUCCESS:
-                // Urządzenie obsługuje biometrię lub PIN
                 BiometricPrompt.PromptInfo promptInfo = new BiometricPrompt.PromptInfo.Builder()
                         .setTitle("Uwierzytelnienie")
                         .setSubtitle("Potwierdź swoją tożsamość")
@@ -69,7 +68,6 @@ public class AuthenticationHelper {
             case BiometricManager.BIOMETRIC_ERROR_NO_HARDWARE:
             case BiometricManager.BIOMETRIC_ERROR_HW_UNAVAILABLE:
             case BiometricManager.BIOMETRIC_ERROR_NONE_ENROLLED:
-                // Brak konfiguracji biometrii lub zabezpieczeń
                 new AlertDialog.Builder(context)
                         .setTitle("Brak zabezpieczeń")
                         .setMessage("Aby korzystać z aplikacji, musisz skonfigurować odcisk palca lub PIN na swoim urządzeniu.")

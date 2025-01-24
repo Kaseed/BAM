@@ -50,13 +50,9 @@ public class NoteAdapter extends ListAdapter<Note, NoteAdapter.NoteHolder> {
         holder.textViewContent.setText(currentNote.getContent());
     }
 
-    public Note getNoteAt(int position) {
-        return getItem(position);
-    }
-
     class NoteHolder extends RecyclerView.ViewHolder {
-        private TextView textViewTitle;
-        private TextView textViewContent;
+        private final TextView textViewTitle;
+        private final TextView textViewContent;
         private ImageView imageViewDelete;
 
         public NoteHolder(View itemView) {

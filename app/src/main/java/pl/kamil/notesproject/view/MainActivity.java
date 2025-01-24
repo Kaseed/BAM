@@ -8,22 +8,17 @@ import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.floatingactionbutton.FloatingActionButton;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.util.ArrayList;
 import java.util.List;
 
-import pl.kamil.native_lib.NativeLib;
 import pl.kamil.notesproject.R;
 import pl.kamil.notesproject.adapter.NoteAdapter;
 import pl.kamil.notesproject.model.Note;
@@ -36,7 +31,6 @@ import pl.kamil.notesproject.viewmodel.NoteViewModel;
 public class MainActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
     private NoteAdapter noteAdapter;
-    private List<Note> notes = new ArrayList<>();
     private NoteViewModel noteViewModel;
 
     @Override
@@ -57,13 +51,11 @@ public class MainActivity extends AppCompatActivity {
 
         noteViewModel = new ViewModelProvider(this).get(NoteViewModel.class);
         noteViewModel.getAllNotes().observe(this, notes -> {
-            // Aktualizujemy adapter, kiedy lista notatek się zmieni
             noteAdapter.submitList(notes);
         });
 
-        // Obsługa kliknięcia ikony kosza
         noteAdapter.setOnDeleteClickListener(note -> {
-            noteViewModel.delete(note); // Wywołujemy usuwanie w ViewModel
+            noteViewModel.delete(note);
             Toast.makeText(MainActivity.this, "Notatka usunięta", Toast.LENGTH_SHORT).show();
         });
 
@@ -113,7 +105,6 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void showExportDialog() {
-        // Wyświetlenie formularza dla użytkownika
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         View dialogView = getLayoutInflater().inflate(R.layout.dialog_export, null);
 
@@ -137,13 +128,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void exportNotes(String fileName, String password) {
-        // Pobranie danych i ich szyfrowanie
         noteViewModel.getAllNotes().observe(this, notes -> {
             try {
                 String json = NoteUtil.convertNotesToJson(notes); // Konwertowanie notatek do JSON
                 byte[] encryptedData = NoteUtil.encryptData(json, password); // Szyfrowanie danych
 
-                // Zapis do pliku
                 File file = new File(getExternalFilesDir(null), fileName + ".encrypted");
                 try (FileOutputStream fos = new FileOutputStream(file)) {
                     fos.write(encryptedData);
@@ -181,7 +170,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void importNotes(String filePath, String password) {
         try {
-            // Wczytanie danych z pliku
             File file = new File(filePath);
             if (!file.exists()) {
                 Toast.makeText(this, "Plik nie istnieje!", Toast.LENGTH_SHORT).show();
@@ -194,13 +182,10 @@ public class MainActivity extends AppCompatActivity {
                 fis.read(encryptedData);
             }
 
-            // Odszyfrowanie danych
             String decryptedJson = NoteUtil.decryptData(encryptedData, password);
 
-            // Konwersja JSON na listę notatek
             List<Note> importedNotes = NoteUtil.convertJsonToNotes(decryptedJson);
 
-            // Zapisanie notatek do bazy danych
             for (Note note : importedNotes) {
                 noteViewModel.insert(note);
             }

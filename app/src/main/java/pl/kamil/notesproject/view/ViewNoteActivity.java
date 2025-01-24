@@ -21,13 +21,9 @@ public class ViewNoteActivity extends AppCompatActivity {
         TextView textViewTitle = findViewById(R.id.text_view_note_title);
         TextView textViewContent = findViewById(R.id.text_view_note_content);
 
-        // Odbierz dane notatki z Intentu
         String noteTitle = getIntent().getStringExtra("note_title");
         String noteContent = getIntent().getStringExtra("note_content");
 
-
-
-        // Ustaw dane w widokach
         textViewTitle.setText(noteTitle);
         textViewContent.setText(nativeLib.encryptWithXOR(noteContent, 2));
     }

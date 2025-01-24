@@ -4,7 +4,6 @@ import android.content.Context;
 import android.security.keystore.KeyGenParameterSpec;
 import android.security.keystore.KeyProperties;
 import android.util.Log;
-import android.widget.Toast;
 
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
@@ -20,14 +19,12 @@ import java.io.FileOutputStream;
 import java.security.KeyStore;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
 import javax.crypto.SecretKey;
 import javax.crypto.spec.GCMParameterSpec;
 
-import pl.kamil.native_lib.NativeLib;
 import pl.kamil.notesproject.model.Note;
 
 public class NoteFileDataBase {
@@ -76,7 +73,6 @@ public class NoteFileDataBase {
 
     public void dropDatabase() {
         try {
-            // Usuń klucz z Android Keystore
             KeyStore keyStore = KeyStore.getInstance("AndroidKeyStore");
             keyStore.load(null);
 
@@ -84,7 +80,6 @@ public class NoteFileDataBase {
                 keyStore.deleteEntry(KEY_ALIAS);
             }
 
-            // Usuń plik z notatkami
             if (file.exists()) {
                 if (file.delete()) {
                     Log.i("NoteDatabase", "Dane i klucz zostały usunięte.");
@@ -95,7 +90,6 @@ public class NoteFileDataBase {
                 Log.e("NoteDatabase", "Plik danych nie istnieje.");
             }
 
-            // Wyczyść listę notatek w pamięci
             notesLiveData.postValue(new ArrayList<>());
 
         } catch (Exception e) {
